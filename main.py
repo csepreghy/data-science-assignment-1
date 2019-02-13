@@ -4,5 +4,5 @@ from matplotlib import style
 
 style.use('fivethirtyeight')
 
-with open('smoking.txt', 'rb') as f:
-  print(f.readlines())
+smoking_data = np.loadtxt('smoking.txt', delimiter="\t")
+print(smoking_data)
