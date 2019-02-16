@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import style
+from scipy import stats
 
 plt.style.use('dark_background')
 
@@ -30,15 +31,21 @@ print(np.array(smokers))
 smokers = np.array(smokers)
 nonsmokers = np.array(nonsmokers)
 
-smokers_avg_FEV1 = np.mean(smokers[:,1])
-nonsmokers_avg_FEV1 = np.mean(nonsmokers[:, 1])
+smokers_FEV1 = smokers[:,1]
+nonsmokers_FEV1 = nonsmokers[:,1]
+
+print('number of smoker FEV1 scores ' + str(len(smokers_FEV1)))
+print('number of non-smoker FEV1 scores ' + str(len(nonsmokers_FEV1)))
+ 
+smokers_avg_FEV1 = np.mean(smokers_FEV1)
+nonsmokers_avg_FEV1 = np.mean(nonsmokers_FEV1)
 
 print("Smokers' FEV1 score: ", str(smokers_avg_FEV1))
 print("Non-smokers' FEV1 score: ", str(nonsmokers_avg_FEV1))
 
 # Exercise 2
 
-data = [smokers[:,1], nonsmokers[:,1]]
+data = [smokers_FEV1, nonsmokers_FEV1]
 labels = ['Smokers', 'Non-smokers']
 
 dark_background = '#1C2024'
@@ -48,14 +55,14 @@ fig.patch.set_facecolor(dark_background)
 ax.set_facecolor(dark_background)
 
 bplot = ax.boxplot(data,
-                     vert=True,
-                     patch_artist=True,
-                     labels=labels,
-                     boxprops=dict(facecolor='#1861CC', color='#FFFFFF'),
-                     capprops=dict(color='#FFFFFF'),
-                     whiskerprops=dict(color='#ffffff'),
-                     flierprops=dict(markeredgecolor='#FFFFFF'),
-                     medianprops=dict(color='#FFFFFF')
+                   vert=True,
+                   patch_artist=True,
+                   labels=labels,
+                   boxprops=dict(facecolor='#1861CC', color='#FFFFFF'),
+                   capprops=dict(color='#FFFFFF'),
+                   whiskerprops=dict(color='#ffffff'),
+                   flierprops=dict(markeredgecolor='#FFFFFF'),
+                   medianprops=dict(color='#FFFFFF')
 )
 
 colors = ['#F2B134', '#4FB99F']
@@ -63,8 +70,6 @@ colors = ['#F2B134', '#4FB99F']
 
 for patch, color in zip(bplot['boxes'], colors):
     patch.set_facecolor(color)
-    print(patch)
-    # patch.style()
 
 ax.set_ylabel('FEV1 score')
 ax.set_title('FEV1 scores for smokers\nand non-smokers')
@@ -73,5 +78,18 @@ plt.subplots_adjust(top=0.85)
 plt.grid(True, color='#444444')
 plt.show()
 
+variance_smokers = smokers_FEV1.var(ddof=1)
+variance_nonsmokers = nonsmokers_FEV1.var(ddof=1)
+print(variance_smokers)
+print(variance_nonsmokers)
 
+standard_deviation = np.sqrt((variance_smokers + variance_nonsmokers)/2)
 
+print(standard_deviation)
+
+# t = (smokers_FEV1.mean() - nonsmokers_FEV1.mean())/(standard_deviation*np.sqrt(2/N))
+
+t, p = stats.ttest_ind(smokers_FEV1, nonsmokers_FEV1, equal_var=False)
+
+print('t is: ', t)
+print('p is: ', p)
