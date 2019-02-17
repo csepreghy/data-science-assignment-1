@@ -90,27 +90,22 @@ smokers_y = smokers[:, 1]
 nonsmokers_x = nonsmokers[:, 0]
 nonsmokers_y = nonsmokers[:, 1]
 
-fig2, ax2 = plt.subplots()
-fig2.patch.set_facecolor(dark_background)
-ax2.set_facecolor(dark_background)
-
-ax2.set_ylabel('FEV1 score')
-ax2.set_xlabel('Age')
-ax2.set_title('FEV1 scores among different agegroups')
-ax2.xaxis.set_major_locator(ticker.MultipleLocator(1))
-
-ax2.scatter(nonsmokers_x, nonsmokers_y, linewidths=0.25, alpha=0.5, c='#4FB99F')
-ax2.scatter(smokers_x, smokers_y, linewidths=0.25, alpha=0.5, c='#F2B134')
-ax2.grid(True, color='#444444')
-
-ax2.legend(('Non-smokers', 'Smokers'), facecolor='#282D33')
-
+plotify.create_scatter_plot(
+    x_list=[nonsmokers_x, smokers_x],
+    y_list=[nonsmokers_y, smokers_y],
+  linewidth = 0.25,
+  alpha = 0.5,
+  xlabel = 'Age',
+  ylabel = 'FEV1 score',
+  title='FEV1 scores among different agegroups',
+  legend_labels = ('Non-smokers', 'Smokers')
+)
 
 # Exercise 5
 
 fig3, ax3 = plt.subplots()
-fig3.patch.set_facecolor(dark_background)
-ax3.set_facecolor(dark_background)
+fig3.patch.set_facecolor('#1C2024')
+ax3.set_facecolor('#1C2024')
 ax3.grid(True, color='#444444')
 
 ax3.hist(nonsmokers_x, int(np.max(nonsmokers_x) -

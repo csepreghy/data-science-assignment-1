@@ -19,6 +19,8 @@ class Plotify:
     self.c_red = '#ED553B'
     self.c_white = '#FFFFFF'
 
+    self.plot_colors = [self.c_cyan, self.c_orange, self.c_red]
+
   def create_boxplot(self, data, labels, title, ylabel):
     fig, ax = plt.subplots()
     fig.patch.set_facecolor(self.background_color)
@@ -36,9 +38,7 @@ class Plotify:
       medianprops=dict(color=self.c_white)
     )
 
-    colors = [self.c_cyan, self.c_orange, self.c_red]
-
-    for patch, color in zip(bplot['boxes'], colors):
+    for patch, color in zip(bplot['boxes'], self.plot_colors):
         patch.set_facecolor(color)
 
     ax.set_ylabel(ylabel)
@@ -50,4 +50,37 @@ class Plotify:
 
     plt.show()
   
+  def create_scatter_plot(
+    self,
+    x_list,
+    y_list,
+    linewidth = 0.5,
+    alpha = 1,
+    xlabel = 'X label',
+    ylabel = 'Y label',
+    title = 'Title',
+    legend_labels = ('Men', 'Women')
+  ):
+    fig, ax = plt.subplots()
+    fig.patch.set_facecolor(self.background_color)
+    ax.set_facecolor(self.background_color)
+
+    ax.set_ylabel(ylabel)
+    ax.set_xlabel(xlabel)
+    ax.set_title(title)
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+
+    for i, x in enumerate(x_list):
+      ax.scatter(
+        x,
+        y_list[i],
+        linewidths = linewidth,
+        alpha=alpha,
+        c=self.plot_colors[i]
+      )
+
+    ax.grid(self.use_grid, color=self.grid_color)
+
+    ax.legend(legend_labels, facecolor=self.legend_color)
+    plt.show()
 
