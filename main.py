@@ -2,19 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import style
 from scipy import stats
-from decimal import *
 from matplotlib import rcParams
 import matplotlib.font_manager
+import matplotlib.ticker as ticker
 
 rcParams['font.sans-serif'] = ['Arial']
-
-
-
-
-print([f.name for f in matplotlib.font_manager.fontManager.afmlist])
-
-getcontext().prec = 26
-getcontext().Emin = -9999999999999
 
 plt.style.use('dark_background')
 
@@ -63,11 +55,11 @@ labels = ['Smokers', 'Non-smokers']
 
 dark_background = '#1C2024'
 
-fig, ax = plt.subplots()
-fig.patch.set_facecolor(dark_background)
-ax.set_facecolor(dark_background)
+fig1, ax1 = plt.subplots()
+fig1.patch.set_facecolor(dark_background)
+ax1.set_facecolor(dark_background)
 
-bplot = ax.boxplot(data,
+bplot = ax1.boxplot(data,
                    vert=True,
                    patch_artist=True,
                    labels=labels,
@@ -84,9 +76,9 @@ colors = ['#F2B134', '#4FB99F']
 for patch, color in zip(bplot['boxes'], colors):
     patch.set_facecolor(color)
 
-ax.set_ylabel('FEV1 score')
-ax.set_title('FEV1 scores for smokers\nand non-smokers')
-ax.legend((bplot['boxes']), ('Smokers', 'Non-smokers'),
+ax1.set_ylabel('FEV1 score')
+ax1.set_title('FEV1 scores for smokers\nand non-smokers')
+ax1.legend((bplot['boxes']), ('Smokers', 'Non-smokers'),
           fontsize='medium', loc=2, facecolor='#282D33')
 
 plt.subplots_adjust(top=0.85)
@@ -125,18 +117,36 @@ smokers_y = smokers[:, 1]
 nonsmokers_x = nonsmokers[:, 0]
 nonsmokers_y = nonsmokers[:, 1]
 
-fig, ax = plt.subplots()
-fig.patch.set_facecolor(dark_background)
-ax.set_facecolor(dark_background)
+fig2, ax2 = plt.subplots()
+fig2.patch.set_facecolor(dark_background)
+ax2.set_facecolor(dark_background)
 
-ax.set_ylabel('FEV1 score')
-ax.set_xlabel('Age')
-ax.set_title('FEV1 scores among different agegroups')
+ax2.set_ylabel('FEV1 score')
+ax2.set_xlabel('Age')
+ax2.set_title('FEV1 scores among different agegroups')
+ax2.xaxis.set_major_locator(ticker.MultipleLocator(1))
 
-ax.scatter(nonsmokers_x, nonsmokers_y, linewidths=0.25, alpha=0.5, c='#4FB99F')
-ax.scatter(smokers_x, smokers_y, linewidths=0.25, alpha=0.5, c='#F2B134')
-plt.grid(True, color='#444444')
+ax2.scatter(nonsmokers_x, nonsmokers_y, linewidths=0.25, alpha=0.5, c='#4FB99F')
+ax2.scatter(smokers_x, smokers_y, linewidths=0.25, alpha=0.5, c='#F2B134')
+ax2.grid(True, color='#444444')
 
-plt.legend(('Non-smokers', 'Smokers'), facecolor='#282D33')
+ax2.legend(('Non-smokers', 'Smokers'), facecolor='#282D33')
+
+
+# Exercise 5
+
+fig3, ax3 = plt.subplots()
+fig3.patch.set_facecolor(dark_background)
+ax3.set_facecolor(dark_background)
+ax3.grid(True, color='#444444')
+
+ax3.hist(nonsmokers_x, int(np.max(nonsmokers_x) -
+                           np.min(nonsmokers_x)), facecolor='#4FB99F')
+ax3.hist(smokers_x, int(np.max(smokers_x) - np.min(smokers_x)), facecolor='#F2B134')
+ax3.set_ylabel('Number of People')
+ax3.set_xlabel('Age')
+ax3.set_title('Numbeer of datapoints in different agegroups')
+ax3.legend(('Non-smokers', 'Smokers'), facecolor='#282D33')
+ax3.xaxis.set_major_locator(ticker.MultipleLocator(1))
 
 plt.show()
