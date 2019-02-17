@@ -6,9 +6,7 @@ from matplotlib import rcParams
 import matplotlib.font_manager
 import matplotlib.ticker as ticker
 
-rcParams['font.sans-serif'] = ['Arial']
-
-plt.style.use('dark_background')
+from plotify import Plotify
 
 # age – a positive integer (years)
 # FEV1 – a continuous valued measurement(liter)
@@ -50,39 +48,14 @@ print("Non-smokers' FEV1 score: ", str(nonsmokers_avg_FEV1))
 
 # Exercise 2
 
-data = [smokers_FEV1, nonsmokers_FEV1]
-labels = ['Smokers', 'Non-smokers']
+plotify = Plotify()
 
-dark_background = '#1C2024'
-
-fig1, ax1 = plt.subplots()
-fig1.patch.set_facecolor(dark_background)
-ax1.set_facecolor(dark_background)
-
-bplot = ax1.boxplot(data,
-                   vert=True,
-                   patch_artist=True,
-                   labels=labels,
-                   boxprops=dict(facecolor='#1861CC', color='#FFFFFF'),
-                   capprops=dict(color='#FFFFFF'),
-                   whiskerprops=dict(color='#ffffff'),
-                   flierprops=dict(markeredgecolor='#FFFFFF'),
-                   medianprops=dict(color='#FFFFFF')
+plotify.create_boxplot(
+    data=[smokers_FEV1, nonsmokers_FEV1],
+    labels=['Smokers', 'Non-smokers'],
+    ylabel='FEV1 score',
+    title='FEV1 scores for smokers\nand non-smokers'
 )
-
-colors = ['#F2B134', '#4FB99F']
-
-
-for patch, color in zip(bplot['boxes'], colors):
-    patch.set_facecolor(color)
-
-ax1.set_ylabel('FEV1 score')
-ax1.set_title('FEV1 scores for smokers\nand non-smokers')
-ax1.legend((bplot['boxes']), ('Smokers', 'Non-smokers'),
-          fontsize='medium', loc=2, facecolor='#282D33')
-
-plt.subplots_adjust(top=0.85)
-plt.grid(True, color='#444444')
 
 
 # Exercise 3
