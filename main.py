@@ -6,6 +6,8 @@ from matplotlib import rcParams
 import matplotlib.font_manager
 import matplotlib.ticker as ticker
 
+from meanFEV1 import meanFEV1
+
 from plotify import Plotify
 
 # age – a positive integer (years)
@@ -30,7 +32,7 @@ for person in smoking_data:
   elif person[4] == 1:
     smokers.append(person)
 
-print(np.array(smokers))
+
 smokers = np.array(smokers)
 nonsmokers = np.array(nonsmokers)
 
@@ -40,8 +42,10 @@ nonsmokers_FEV1 = nonsmokers[:,1]
 print('number of smoker FEV1 scores ' + str(len(smokers_FEV1)))
 print('number of non-smoker FEV1 scores ' + str(len(nonsmokers_FEV1)))
  
-smokers_avg_FEV1 = np.mean(smokers_FEV1)
-nonsmokers_avg_FEV1 = np.mean(nonsmokers_FEV1)
+# smokers_avg_FEV1 = np.mean(smokers_FEV1)
+# nonsmokers_avg_FEV1 = np.mean(nonsmokers_FEV1)
+
+smokers_avg_FEV1, nonsmokers_avg_FEV1 = meanFEV1(smoking_data)
 
 print("Smokers' FEV1 score: ", str(smokers_avg_FEV1))
 print("Non-smokers' FEV1 score: ", str(nonsmokers_avg_FEV1))
