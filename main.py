@@ -6,7 +6,7 @@ from matplotlib import rcParams
 import matplotlib.font_manager
 import matplotlib.ticker as ticker
 
-from meanFEV1 import meanFEV1
+from meanFEV1 import meanFEV1, split_smoking_data
 
 from plotify import Plotify
 
@@ -23,29 +23,13 @@ from plotify import Plotify
 
 smoking_data = np.loadtxt('smoking.txt', delimiter="\t")
 
-smokers = []
-nonsmokers = []
+smokers, nonsmokers = split_smoking_data(smoking_data)
 
-for person in smoking_data:
-  if person[4] == 0:
-    nonsmokers.append(person)
-  elif person[4] == 1:
-    smokers.append(person)
-
-
-smokers = np.array(smokers)
-nonsmokers = np.array(nonsmokers)
-
-smokers_FEV1 = smokers[:,1]
-nonsmokers_FEV1 = nonsmokers[:,1]
+smokers_avg_FEV1, nonsmokers_avg_FEV1, smokers_FEV1, nonsmokers_FEV1 = meanFEV1(smoking_data)
 
 print('number of smoker FEV1 scores ' + str(len(smokers_FEV1)))
 print('number of non-smoker FEV1 scores ' + str(len(nonsmokers_FEV1)))
- 
-# smokers_avg_FEV1 = np.mean(smokers_FEV1)
-# nonsmokers_avg_FEV1 = np.mean(nonsmokers_FEV1)
 
-smokers_avg_FEV1, nonsmokers_avg_FEV1 = meanFEV1(smoking_data)
 
 print("Smokers' FEV1 score: ", str(smokers_avg_FEV1))
 print("Non-smokers' FEV1 score: ", str(nonsmokers_avg_FEV1))
