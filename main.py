@@ -79,8 +79,8 @@ nonsmokers_x = nonsmokers[:, 0]
 nonsmokers_y = nonsmokers[:, 1]
 
 plotify.scatter_plot(
-    x_list=[nonsmokers_x, smokers_x],
-    y_list=[nonsmokers_y, smokers_y],
+  x_list=[nonsmokers_x, smokers_x],
+  y_list=[nonsmokers_y, smokers_y],
   linewidth = 0.25,
   alpha = 0.5,
   xlabel = 'Age',
