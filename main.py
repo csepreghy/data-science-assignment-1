@@ -50,7 +50,7 @@ print("Non-smokers' FEV1 score: ", str(nonsmokers_avg_FEV1))
 
 plotify = Plotify()
 
-plotify.create_boxplot(
+plotify.boxplot(
     data=[smokers_FEV1, nonsmokers_FEV1],
     labels=['Smokers', 'Non-smokers'],
     ylabel='FEV1 score',
@@ -90,7 +90,7 @@ smokers_y = smokers[:, 1]
 nonsmokers_x = nonsmokers[:, 0]
 nonsmokers_y = nonsmokers[:, 1]
 
-plotify.create_scatter_plot(
+plotify.scatter_plot(
     x_list=[nonsmokers_x, smokers_x],
     y_list=[nonsmokers_y, smokers_y],
   linewidth = 0.25,
@@ -103,18 +103,10 @@ plotify.create_scatter_plot(
 
 # Exercise 5
 
-fig3, ax3 = plt.subplots()
-fig3.patch.set_facecolor('#1C2024')
-ax3.set_facecolor('#1C2024')
-ax3.grid(True, color='#444444')
-
-ax3.hist(nonsmokers_x, int(np.max(nonsmokers_x) -
-                           np.min(nonsmokers_x)), facecolor='#4FB99F')
-ax3.hist(smokers_x, int(np.max(smokers_x) - np.min(smokers_x)), facecolor='#F2B134')
-ax3.set_ylabel('Number of People')
-ax3.set_xlabel('Age')
-ax3.set_title('Numbeer of datapoints in different agegroups')
-ax3.legend(('Non-smokers', 'Smokers'), facecolor='#282D33')
-ax3.xaxis.set_major_locator(ticker.MultipleLocator(1))
-
-plt.show()
+plotify.histogram(
+  x_list = [nonsmokers_x, smokers_x],
+  ylabel = 'Number of People',
+  xlabel = 'Age',
+  title = 'Numbeer of datapoints in different agegroups',
+  labels = ('Non-smokers', 'Smokers')
+)

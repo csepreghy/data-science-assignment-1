@@ -2,6 +2,7 @@ from matplotlib import rcParams
 import matplotlib.font_manager
 import matplotlib.ticker as ticker
 import matplotlib.pyplot as plt
+import numpy as np
 
 class Plotify:
   def __init__(self):
@@ -21,7 +22,7 @@ class Plotify:
 
     self.plot_colors = [self.c_cyan, self.c_orange, self.c_red]
 
-  def create_boxplot(self, data, labels, title, ylabel):
+  def boxplot(self, data, labels, title, ylabel):
     fig, ax = plt.subplots()
     fig.patch.set_facecolor(self.background_color)
     ax.set_facecolor(self.background_color)
@@ -50,7 +51,7 @@ class Plotify:
 
     plt.show()
   
-  def create_scatter_plot(
+  def scatter_plot(
     self,
     x_list,
     y_list,
@@ -84,3 +85,26 @@ class Plotify:
     ax.legend(legend_labels, facecolor=self.legend_color)
     plt.show()
 
+  def histogram(
+    self,
+    x_list,
+    ylabel = 'Y label',
+    xlabel = 'X label',
+    title = 'Title',
+    labels = ('Label 1', 'Label 2')
+  ):
+    fig, ax = plt.subplots()
+    fig.patch.set_facecolor(self.background_color)
+    ax.set_facecolor(self.background_color)
+    ax.grid(self.use_grid, color=self.grid_color)
+
+    for i, x in enumerate(x_list):
+      ax.hist(x, int(np.max(x) - np.min(x)), facecolor=self.plot_colors[i])
+
+    ax.set_ylabel(ylabel)
+    ax.set_xlabel(xlabel)
+    ax.set_title(title)
+    ax.legend(labels, facecolor=self.legend_color)
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+
+    plt.show()
